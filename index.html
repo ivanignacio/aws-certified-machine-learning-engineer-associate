@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS Machine Learning Engineer - Associate Quiz</title>
+  <meta name="description" content="Free practice quizzes for the AWS Certified Machine Learning Engineer - Associate (MLA-C01) exam with instant feedback." />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <button class="brand" type="button" data-action="home" aria-label="Go to home">
+        <span class="brand-mark" aria-hidden="true">◈</span>
+        <span>MLA Practice Quiz</span>
+      </button>
+      <span class="tag">MLA-C01</span>
+    </div>
+  </header>
+
+  <main class="container" id="app">
+    <!-- ───────────── Home ───────────── -->
+    <section id="view-home" class="view">
+      <div class="hero">
+        <h1>AWS Certified Machine Learning Engineer – Associate</h1>
+        <p class="lead">
+          The AWS Certified Machine Learning Engineer – Associate (exam code <strong>MLA-C01</strong>) validates the ability to build, operationalize, deploy and maintain machine learning solutions and pipelines on AWS, mainly with Amazon SageMaker AI. It covers data preparation, model development, deployment and orchestration, and monitoring and securing ML solutions. AWS recommends at least one year of experience with SageMaker AI and other AWS services for ML engineering.
+        </p>
+        <ul class="facts">
+          <li><span class="fact-num">65</span><span>questions (50 scored)</span></li>
+          <li><span class="fact-num">130</span><span>minutes</span></li>
+          <li><span class="fact-num">720</span><span>passing score (100–1000)</span></li>
+          <li><span class="fact-num">2</span><span>formats: multiple choice &amp; multiple response</span></li>
+        </ul>
+      </div>
+
+      <h2>Exam domains</h2>
+      <div class="domains" id="domain-list"></div>
+
+      <h2>Choose a practice mode</h2>
+      <div class="modes">
+        <button class="mode-card" type="button" data-action="mode-exam">
+          <span class="mode-num">1</span>
+          <span class="mode-title">30-question quiz</span>
+          <span class="mode-desc">A random set of 30 questions weighted like the real exam domains.</span>
+        </button>
+        <button class="mode-card" type="button" data-action="mode-topic">
+          <span class="mode-num">2</span>
+          <span class="mode-title">Practice by topic</span>
+          <span class="mode-desc">Pick one or more domains and drill only those questions.</span>
+        </button>
+        <button class="mode-card" type="button" data-action="mode-all">
+          <span class="mode-num">3</span>
+          <span class="mode-title">All questions</span>
+          <span class="mode-desc">Go through the entire bank of <span id="total-count"></span> questions in random order.</span>
+        </button>
+      </div>
+      <p class="disclaimer">
+        This is an unofficial study aid and is not affiliated with or endorsed by Amazon Web Services. Always check the
+        official exam guide for the latest content outline.
+      </p>
+    </section>
+
+    <!-- ───────────── Topic picker ───────────── -->
+    <section id="view-topics" class="view" hidden>
+      <h1>Practice by topic</h1>
+      <p class="lead">Select the domains you want to practice.</p>
+      <form id="topic-form">
+        <div class="topic-list" id="topic-list"></div>
+        <div class="form-row">
+          <label for="topic-limit">Number of questions</label>
+          <select id="topic-limit">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="all" selected>All available</option>
+          </select>
+        </div>
+        <p class="hint" id="topic-hint"></p>
+        <div class="actions">
+          <button type="button" class="btn btn-ghost" data-action="home">Back</button>
+          <button type="submit" class="btn btn-primary" id="topic-start">Start practice</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ───────────── Quiz ───────────── -->
+    <section id="view-quiz" class="view" hidden>
+      <div class="quiz-head">
+        <div>
+          <div class="quiz-mode" id="quiz-mode"></div>
+          <div class="quiz-progress-text" id="quiz-progress-text"></div>
+        </div>
+        <div class="score-pill" id="score-pill" aria-live="polite"></div>
+      </div>
+      <div class="progress" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
+
+      <article class="card question-card">
+        <div class="question-domain" id="question-domain"></div>
+        <h2 class="question-text" id="question-text"></h2>
+        <div class="options" id="options" role="group" aria-label="Answer options"></div>
+        <div class="feedback" id="feedback" hidden aria-live="polite">
+          <div class="feedback-title" id="feedback-title"></div>
+          <p id="feedback-text"></p>
+        </div>
+      </article>
+
+      <div class="actions">
+        <button type="button" class="btn btn-ghost" id="end-btn">End quiz</button>
+        <button type="button" class="btn btn-primary" id="next-btn" disabled>Next question</button>
+      </div>
+      <p class="hint keys">Tip: press <kbd>1</kbd>–<kbd>4</kbd> to answer and <kbd>Enter</kbd> to continue.</p>
+    </section>
+
+    <!-- ───────────── Results ───────────── -->
+    <section id="view-results" class="view" hidden>
+      <div class="card results-card">
+        <div class="result-ring" id="result-ring"><span id="result-pct"></span></div>
+        <div>
+          <h1 id="result-title"></h1>
+          <p class="lead" id="result-summary"></p>
+        </div>
+      </div>
+
+      <h2>Score by domain</h2>
+      <div class="breakdown" id="breakdown"></div>
+
+      <div class="actions">
+        <button type="button" class="btn btn-ghost" data-action="home">Home</button>
+        <button type="button" class="btn btn-secondary" id="retry-missed-btn">Retry missed questions</button>
+        <button type="button" class="btn btn-primary" id="restart-btn">Try again</button>
+      </div>
+
+      <div id="review-section">
+        <h2>Review missed questions</h2>
+        <div id="review-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/questions.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
